@@ -4,7 +4,7 @@ using UnityEngine;
 public class CuttingCounterVisual : MonoBehaviour
 {
     private Animator animator;
-    private const string CUT = "cut";
+    private const string CUT = "Cut";
     [SerializeField] private CuttingCounter cuttingCounter; 
 
     private void Awake()
