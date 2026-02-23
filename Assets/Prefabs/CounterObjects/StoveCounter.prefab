@@ -104,6 +104,11 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 846928209695650365}
   m_SourcePrefab: {fileID: 100100000, guid: 93af8b85a17635f40a5b76ed82a86c18, type: 3}
+--- !u!1 &47411893745359452 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 17251720544094567, guid: 93af8b85a17635f40a5b76ed82a86c18, type: 3}
+  m_PrefabInstance: {fileID: 42004112524022587}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &4344362197709205460 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 4386361873462607087, guid: 93af8b85a17635f40a5b76ed82a86c18, type: 3}
@@ -139,6 +144,11 @@ MonoBehaviour:
 --- !u!1 &5029163739541904426 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 4998458208842551057, guid: 93af8b85a17635f40a5b76ed82a86c18, type: 3}
+  m_PrefabInstance: {fileID: 42004112524022587}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &5253173510748556757 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5220305274835918574, guid: 93af8b85a17635f40a5b76ed82a86c18, type: 3}
   m_PrefabInstance: {fileID: 42004112524022587}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &6958374500473645557 stripped
@@ -250,7 +260,8 @@ MonoBehaviour:
   counterTopPoint: {fileID: 4685938575201111448}
   fryingReceipeSOArray:
   - {fileID: 11400000, guid: 89944af5319ec43beac60fcfbb1ecca9, type: 2}
-  - {fileID: 11400000, guid: 4c7118f09c672424a9bb00422522fb78, type: 2}
+  burningReceipeSOArray:
+  - {fileID: 11400000, guid: b523a3f19f9b8430dbcc30e33355e17d, type: 2}
 --- !u!1001 &3795184495961738134
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -306,8 +317,31 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 4589716710238282922, guid: 93af8b85a17635f40a5b76ed82a86c18, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 5520834136531923556}
   m_SourcePrefab: {fileID: 100100000, guid: 93af8b85a17635f40a5b76ed82a86c18, type: 3}
+--- !u!1 &800170923649134396 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4589716710238282922, guid: 93af8b85a17635f40a5b76ed82a86c18, type: 3}
+  m_PrefabInstance: {fileID: 3795184495961738134}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &5520834136531923556
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 800170923649134396}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a0ea877e501794993a7bbbe188791cee, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::StoveCounterVisual
+  stoveOnGameObject: {fileID: 47411893745359452}
+  particlesOnGameObject: {fileID: 5253173510748556757}
+  stoveCounter: {fileID: 7073998763562160499}
 --- !u!4 &800170923649134397 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4589716710238282923, guid: 93af8b85a17635f40a5b76ed82a86c18, type: 3}
