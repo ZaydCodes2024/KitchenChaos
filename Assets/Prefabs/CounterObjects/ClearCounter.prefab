@@ -202,7 +202,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8509940834203435285, guid: 300e5c0894f654644969aa5ae8e2a88d, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8509940834203435285, guid: 300e5c0894f654644969aa5ae8e2a88d, type: 3}
       propertyPath: m_LocalRotation.x
@@ -210,7 +210,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8509940834203435285, guid: 300e5c0894f654644969aa5ae8e2a88d, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8509940834203435285, guid: 300e5c0894f654644969aa5ae8e2a88d, type: 3}
       propertyPath: m_LocalRotation.z
@@ -222,7 +222,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8509940834203435285, guid: 300e5c0894f654644969aa5ae8e2a88d, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: 180
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8509940834203435285, guid: 300e5c0894f654644969aa5ae8e2a88d, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
@@ -269,5 +269,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4e976e2ef05284c54baaa6818ce96641, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ClearCounter
-  kitchenObjectSO: {fileID: 11400000, guid: d6762df1bcdd3444ba5fc9db808bad25, type: 2}
   counterTopPoint: {fileID: 1859124467907053751}
