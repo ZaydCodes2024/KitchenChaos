@@ -1,9 +1,12 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class DeliveryManager : MonoBehaviour
 {
     public static DeliveryManager Instance { get; private set;}
+    public event EventHandler OnReceipeSpawned;
+    public event EventHandler OnReceipeCompleted;
     private List<ReceipeSO> waitingReceipeSOList;
     [SerializeField] private ReceipeListSO receipeListSO;
     private float spawnReceipeTimer;
@@ -24,9 +27,10 @@ public class DeliveryManager : MonoBehaviour
 
             if (waitingReceipeSOList.Count < waitingReceipeMax)
             {
-                ReceipeSO waitingReceipeSO = receipeListSO.receipeSOList[Random.Range(0, receipeListSO.receipeSOList.Count)];
-                Debug.Log(waitingReceipeSO.receipeName);
+                ReceipeSO waitingReceipeSO = receipeListSO.receipeSOList[UnityEngine.Random.Range(0, receipeListSO.receipeSOList.Count)];
                 waitingReceipeSOList.Add(waitingReceipeSO);
+
+                OnReceipeSpawned?.Invoke(this,EventArgs.Empty);
             }
         }
     }
@@ -61,13 +65,18 @@ public class DeliveryManager : MonoBehaviour
 
                 if (plateContentMatchesReceipe) // player delivered the correct receipe
                 {
-                    Debug.Log("Player Delivered the correct receipe!");
                     waitingReceipeSOList.RemoveAt(i);
+
+                    OnReceipeCompleted?.Invoke(this,EventArgs.Empty);
                     return;
                 }
             }
         }
         // no matches found, player didn'y deliver the correct receipe
-        Debug.Log("Incorrect receipe");
+    }
+
+    public List<ReceipeSO> GetWaitingReceipeSOList()
+    {
+        return waitingReceipeSOList;
     }
 }
