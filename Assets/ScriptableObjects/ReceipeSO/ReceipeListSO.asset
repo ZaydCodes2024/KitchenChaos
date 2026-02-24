@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1fd3ed08267b64a38aaebb068a703782, type: 3}
+  m_Name: ReceipeListSO
+  m_EditorClassIdentifier: Assembly-CSharp::ReceipeListSO
+  receipeSOList:
+  - {fileID: 11400000, guid: 78fa6f4f587d84e52b808f5e188eb8c1, type: 2}
+  - {fileID: 11400000, guid: 0a8b8b41931b843c78c2acbf3b9197c2, type: 2}
+  - {fileID: 11400000, guid: c53772429069243d78739ca60362741b, type: 2}
+  - {fileID: 11400000, guid: b3e38a017ff1241c884cab665a4bd175, type: 2}
