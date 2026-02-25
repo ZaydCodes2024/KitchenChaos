@@ -7,6 +7,8 @@ public class DeliveryManager : MonoBehaviour
     public static DeliveryManager Instance { get; private set;}
     public event EventHandler OnReceipeSpawned;
     public event EventHandler OnReceipeCompleted;
+    public event EventHandler OnReceipeSuccess;
+    public event EventHandler OnReceipeFailed;
     private List<ReceipeSO> waitingReceipeSOList;
     [SerializeField] private ReceipeListSO receipeListSO;
     private float spawnReceipeTimer;
@@ -68,11 +70,13 @@ public class DeliveryManager : MonoBehaviour
                     waitingReceipeSOList.RemoveAt(i);
 
                     OnReceipeCompleted?.Invoke(this,EventArgs.Empty);
+                    OnReceipeSuccess?.Invoke(this,EventArgs.Empty);
                     return;
                 }
             }
         }
         // no matches found, player didn'y deliver the correct receipe
+        OnReceipeFailed?.Invoke(this,EventArgs.Empty);
     }
 
     public List<ReceipeSO> GetWaitingReceipeSOList()
