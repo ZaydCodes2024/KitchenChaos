@@ -11,7 +11,7 @@ public class GameInput : MonoBehaviour
     public event EventHandler OnPauseAction;
     public enum Binding
     {
-        MoveUp, MoveDown, MoveLeft, MoveRight, Interact, InteractAlt, Pause
+        MoveUp, MoveDown, MoveLeft, MoveRight, Interact, InteractAlt, Pause, GamepadInteract, GamepadInteractAlt, GamepadPause
     }
     private PlayerInputActions playerInputActions;
     private void Awake()
@@ -23,7 +23,7 @@ public class GameInput : MonoBehaviour
         {
             playerInputActions.LoadBindingOverridesFromJson(PlayerPrefs.GetString(PLAYER_PREFS_BINDINGS));
         }
-        
+
         playerInputActions.Player.Enable();
         playerInputActions.Player.Interact.performed += Interact_peformed;
         playerInputActions.Player.InteractAlternate.performed += InteractAlternate_performed;
@@ -89,6 +89,15 @@ public class GameInput : MonoBehaviour
 
             case Binding.Pause:
                 return playerInputActions.Player.Pause.bindings[0].ToDisplayString();
+
+            case Binding.GamepadInteract:
+                return playerInputActions.Player.Interact.bindings[1].ToDisplayString();
+
+            case Binding.GamepadInteractAlt:
+                return playerInputActions.Player.InteractAlternate.bindings[1].ToDisplayString();
+
+            case Binding.GamepadPause:
+                return playerInputActions.Player.Pause.bindings[1].ToDisplayString();
         }
     }
 
@@ -135,6 +144,21 @@ public class GameInput : MonoBehaviour
             case Binding.Pause:
                 inputAction = playerInputActions.Player.Pause;
                 bindingIndex = 0;
+            break;
+
+            case Binding.GamepadInteract:
+                inputAction = playerInputActions.Player.Interact;
+                bindingIndex = 1;
+            break;
+
+            case Binding.GamepadInteractAlt:
+                inputAction = playerInputActions.Player.InteractAlternate;
+                bindingIndex = 1;
+            break;
+
+            case Binding.GamepadPause:
+                inputAction = playerInputActions.Player.Pause;
+                bindingIndex = 1;
             break;
         }
 
