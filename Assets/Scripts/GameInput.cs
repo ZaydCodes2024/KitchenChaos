@@ -9,6 +9,7 @@ public class GameInput : MonoBehaviour
     public event EventHandler OnInteractAction;
     public event EventHandler OnInteractAlternateAction;
     public event EventHandler OnPauseAction;
+    public event EventHandler OnBindingRebindAction;
     public enum Binding
     {
         MoveUp, MoveDown, MoveLeft, MoveRight, Interact, InteractAlt, Pause, GamepadInteract, GamepadInteractAlt, GamepadPause
@@ -172,6 +173,8 @@ public class GameInput : MonoBehaviour
                 
                 PlayerPrefs.SetString(PLAYER_PREFS_BINDINGS, playerInputActions.SaveBindingOverridesAsJson());
                 PlayerPrefs.Save();
+
+                OnBindingRebindAction?.Invoke(this, EventArgs.Empty);
             })
             .Start();
     }
