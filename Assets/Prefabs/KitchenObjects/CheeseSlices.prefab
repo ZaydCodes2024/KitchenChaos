@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 6081786920551921032}
   - component: {fileID: -514747126071696141}
   - component: {fileID: 2551651422634171265}
+  - component: {fileID: -4961840627080937610}
   m_Layer: 0
   m_Name: CheeseSlices
   m_TagString: Untagged
@@ -73,6 +74,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::KitchenObject
   ShowTopMostFoldoutHeaderGroup: 1
   kitchenObjectSO: {fileID: 11400000, guid: 17da8f7fe2c264661a1f1f514327a5fd, type: 2}
+--- !u!114 &-4961840627080937610
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2597152557551473918}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 553e3367648244fe797f0e12e4096be5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::FollowTransform
 --- !u!1001 &9011768099626560743
 PrefabInstance:
   m_ObjectHideFlags: 0
