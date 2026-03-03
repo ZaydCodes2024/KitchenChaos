@@ -1,12 +1,18 @@
 using System;
 using System.Collections;
 using Unity.Netcode;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Player : NetworkBehaviour, IKitchenObjectParent
 {
-    //public static Player Instance { get; private set; }
-    
+    public static Player localInstance { get; private set; }
+    public static event EventHandler OnAnyPlayerSpawned;
+    public static event EventHandler OnAnyPickedSomething;
+    public static void ResetStaticData()
+    {
+        OnAnyPlayerSpawned = null;
+    }
     public event EventHandler OnPickedSomething;
     public event EventHandler<OnSelectedCounterChangedEventArgs> OnSelectedCounterChanged;
     public class OnSelectedCounterChangedEventArgs : EventArgs
@@ -23,14 +29,19 @@ public class Player : NetworkBehaviour, IKitchenObjectParent
     private float rotateSpeed = 10f;
     private Vector3 lastInteractDir;
 
-    private void Awake()
-    {
-        //Instance = this;
-    }
     private void Start()
     {
         GameInput.Instance.OnInteractAction +=  GameInput_OnInteractAction;
         GameInput.Instance.OnInteractAlternateAction += GameInput_OnInteractAlternateAction;
+    }
+    public override void OnNetworkSpawn()
+    {
+        if (IsOwner)
+        {
+            localInstance = this;
+        }
+
+        OnAnyPlayerSpawned?.Invoke(this, EventArgs.Empty);
     }
 
     private void GameInput_OnInteractAlternateAction(object sender, EventArgs e)
@@ -151,6 +162,7 @@ public class Player : NetworkBehaviour, IKitchenObjectParent
 
         if (kitchenObject != null)
             OnPickedSomething?.Invoke(this, EventArgs.Empty);
+            OnAnyPickedSomething?.Invoke(this, EventArgs.Empty);
     }
 
     public KitchenObject GetKitchenObject()
