@@ -1,8 +1,9 @@
 using System;
 using System.Collections.Generic;
+using Unity.Netcode;
 using UnityEngine;
 
-public class DeliveryManager : MonoBehaviour
+public class DeliveryManager : NetworkBehaviour
 {
     public static DeliveryManager Instance { get; private set;}
     public event EventHandler OnReceipeSpawned;
@@ -11,7 +12,7 @@ public class DeliveryManager : MonoBehaviour
     public event EventHandler OnReceipeFailed;
     private List<ReceipeSO> waitingReceipeSOList;
     [SerializeField] private ReceipeListSO receipeListSO;
-    private float spawnReceipeTimer;
+    private float spawnReceipeTimer = 4f;
     private float spawnReceipeTimerMax = 4f;
     private int waitingReceipeMax = 4;
     private int successfullReceipeAmount;
@@ -23,6 +24,8 @@ public class DeliveryManager : MonoBehaviour
     }
     private void Update()
     {
+        if (!IsServer)  return;
+
         spawnReceipeTimer -= Time.deltaTime;
         if (spawnReceipeTimer <= 0f)
         {
@@ -30,12 +33,19 @@ public class DeliveryManager : MonoBehaviour
 
             if (GameManager.Instance.IsGamePlaying() && waitingReceipeSOList.Count < waitingReceipeMax)
             {
-                ReceipeSO waitingReceipeSO = receipeListSO.receipeSOList[UnityEngine.Random.Range(0, receipeListSO.receipeSOList.Count)];
-                waitingReceipeSOList.Add(waitingReceipeSO);
-
-                OnReceipeSpawned?.Invoke(this,EventArgs.Empty);
+                int waitingReceipeSOIndex = UnityEngine.Random.Range(0, receipeListSO.receipeSOList.Count);
+                
+                SpawnNewWaitingReceipeClientRpc(waitingReceipeSOIndex);
             }
         }
+    }
+
+    [ClientRpc]
+    private void SpawnNewWaitingReceipeClientRpc(int waitingReceipeSOIndex)
+    {
+        ReceipeSO waitingReceipeSO = receipeListSO.receipeSOList[waitingReceipeSOIndex];
+        waitingReceipeSOList.Add(waitingReceipeSO);
+        OnReceipeSpawned?.Invoke(this,EventArgs.Empty);
     }
 
     public void DeliverReceipe(PlateKitchenObject plateKitchenObject)
