@@ -78,19 +78,42 @@ public class DeliveryManager : NetworkBehaviour
 
                 if (plateContentMatchesReceipe) // player delivered the correct receipe
                 {
-                    waitingReceipeSOList.RemoveAt(i);
-
-                    OnReceipeCompleted?.Invoke(this,EventArgs.Empty);
-                    OnReceipeSuccess?.Invoke(this,EventArgs.Empty);
-                    successfullReceipeAmount++;
+                    DeliverCorrectReceipeServerRpc(i);
                     return;
                 }
             }
         }
-        // no matches found, player didn'y deliver the correct receipe
+        // no matches found, player didn't deliver the correct receipe
+        DeliverIncorrectReceipeServerRpc();
+    }
+
+    [Rpc(SendTo.Server, InvokePermission = RpcInvokePermission.Everyone)]
+    private void DeliverIncorrectReceipeServerRpc()
+    {
+        DeliverIncorrectReceipeClientRpc();
+    }
+
+    [ClientRpc]
+    private void DeliverIncorrectReceipeClientRpc()
+    {
         OnReceipeFailed?.Invoke(this,EventArgs.Empty);
     }
 
+    [Rpc(SendTo.Server, InvokePermission = RpcInvokePermission.Everyone)]
+    private void DeliverCorrectReceipeServerRpc(int waitingReceipeSOListIndex)
+    {
+        DeliverCorrectReceipeClientRpc(waitingReceipeSOListIndex);
+    }
+
+    [ClientRpc]
+    private void DeliverCorrectReceipeClientRpc(int waitingReceipeSOListIndex)
+    {
+        waitingReceipeSOList.RemoveAt(waitingReceipeSOListIndex);
+
+        OnReceipeCompleted?.Invoke(this,EventArgs.Empty);
+        OnReceipeSuccess?.Invoke(this,EventArgs.Empty);
+        successfullReceipeAmount++;
+    }
     public List<ReceipeSO> GetWaitingReceipeSOList()
     {
         return waitingReceipeSOList;
