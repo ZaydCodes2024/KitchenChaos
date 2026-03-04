@@ -37,7 +37,7 @@ public class StoveCounterSound : MonoBehaviour
 
     private void StoveCounter_OnProgressChanged(object sender, IHasProgress.OnProgressChangedEventArgs e)
     {
-        playWarningSound = stoveCounter.isFried() && e.progressNormalized > burnShowProgressAmount;
+        playWarningSound = stoveCounter.IsFried() && e.progressNormalized > burnShowProgressAmount;
     }
 
     private void StoveCounter_OnStateChanged(object sender, StoveCounter.OnStateChangedEventArgs e)

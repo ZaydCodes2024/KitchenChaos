@@ -16,7 +16,7 @@ public class StoveCounter : BaseCounter, IHasProgress
         Idle, Frying, Fried, Burned
     }
 
-    private NetworkVariable<State> currentState = new(State.Idle);
+    private NetworkVariable<State> currentState = new NetworkVariable<State>(State.Idle);
     [SerializeField] private FryingReceipeSO[] fryingReceipeSOArray;
     [SerializeField] private BurningReceipeSO[] burningReceipeSOArray;
     private NetworkVariable<float> fryTimer = new(0f);
@@ -50,15 +50,28 @@ public class StoveCounter : BaseCounter, IHasProgress
     {
         OnStateChanged?.Invoke(this, new OnStateChangedEventArgs
         {
-            state = currentState.Value
+            state = newState
         });
 
-        if (currentState.Value == State.Burned || currentState.Value == State.Idle)
+        if (newState == State.Idle)
         {
-            OnProgressChanged?.Invoke(this, new IHasProgress.OnProgressChangedEventArgs
-            {
-                progressNormalized = 0f
-            });
+            fryingReceipeSO = null;
+            burningReceipeSO = null;
+
+            OnProgressChanged?.Invoke(this,
+                new IHasProgress.OnProgressChangedEventArgs
+                {
+                    progressNormalized = 0f
+                });
+        }
+
+        if (newState == State.Burned)
+        {
+            OnProgressChanged?.Invoke(this,
+                new IHasProgress.OnProgressChangedEventArgs
+                {
+                    progressNormalized = 0f
+                });
         }
     }
     private void Update()
@@ -129,9 +142,9 @@ public class StoveCounter : BaseCounter, IHasProgress
                 {
                     if (plateKitchenObject.TryAddIngredient(GetKitchenObject().GetKitchenObjectSO()))
                     {
-                        GetKitchenObject().DestroySelf();
+                        KitchenObject.DestroyKitchenObject(GetKitchenObject());
 
-                        currentState.Value = State.Idle;
+                        SetStateIdleServerRpc();
                     }
                 }
             }
@@ -146,6 +159,8 @@ public class StoveCounter : BaseCounter, IHasProgress
     [Rpc(SendTo.Server, InvokePermission = RpcInvokePermission.Everyone)]
     private void SetStateIdleServerRpc()
     {
+        fryTimer.Value = 0f;
+        burningTimer.Value = 0f;
         currentState.Value = State.Idle;
     }
 
@@ -212,7 +227,7 @@ public class StoveCounter : BaseCounter, IHasProgress
         return null;
     }
 
-    public bool isFried()
+    public bool IsFried()
     {
         return currentState.Value == State.Fried;
     }
