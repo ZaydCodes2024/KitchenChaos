@@ -1,7 +1,7 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using Unity.Netcode;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class Player : NetworkBehaviour, IKitchenObjectParent
@@ -22,6 +22,7 @@ public class Player : NetworkBehaviour, IKitchenObjectParent
     [SerializeField] private float moveSpeed;
     [SerializeField] private LayerMask counterLayerMask;
     [SerializeField] private Transform kitchenObjectHoldPoint;
+    [SerializeField] private List<Vector3> spawnPositionList;
     private KitchenObject kitchenObject;
     private BaseCounter selectedCounter;
     private float interactDistance = 2f;
@@ -41,6 +42,7 @@ public class Player : NetworkBehaviour, IKitchenObjectParent
             localInstance = this;
         }
 
+        transform.position = spawnPositionList[(int)OwnerClientId];
         OnAnyPlayerSpawned?.Invoke(this, EventArgs.Empty);
     }
 

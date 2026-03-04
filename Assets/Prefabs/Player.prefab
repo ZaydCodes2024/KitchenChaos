@@ -81,7 +81,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Unity.Netcode.Runtime::Unity.Netcode.NetworkObject
-  GlobalObjectIdHash: 529516486
+  GlobalObjectIdHash: 2349449865
   InScenePlacedSourceGlobalObjectIdHash: 0
   DeferredDespawnTick: 0
   Ownership: 1
@@ -112,6 +112,11 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 64
   kitchenObjectHoldPoint: {fileID: 5347155000756369784}
+  spawnPositionList:
+  - {x: 2, y: 0, z: 0}
+  - {x: -2, y: 0, z: 0}
+  - {x: -2, y: 0, z: -2}
+  - {x: 2, y: 0, z: -2}
 --- !u!114 &805932982066155246
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -261,6 +266,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 07dba5ecb8a6d49718e14c92c0b0ab94, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerAnimator
+  ShowTopMostFoldoutHeaderGroup: 1
   player: {fileID: 6014203858925676018}
 --- !u!114 &3391569806275219873
 MonoBehaviour:
