@@ -10,6 +10,7 @@ public class KitchenGameMultiplayer : NetworkBehaviour
     private void Awake()
     {
         Instance = this;
+        DontDestroyOnLoad(gameObject);
     }
     public void StartHost()
     {
@@ -19,15 +20,7 @@ public class KitchenGameMultiplayer : NetworkBehaviour
 
     private void NetworkManager_ConnectionApprovalCallback(NetworkManager.ConnectionApprovalRequest request, NetworkManager.ConnectionApprovalResponse response)
     {
-        if (GameManager.Instance.IsWaitingToStart())
-        {
-            response.Approved = true;
-            response.CreatePlayerObject = true;
-        }
-        else
-        {
-            response.Approved = false;
-        }
+        response.Approved = true;
         
     }
 
