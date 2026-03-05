@@ -11,6 +11,7 @@ public class HostDisconnectUI : MonoBehaviour
     {
         playAgainButton.onClick.AddListener( () =>
         {
+           NetworkManager.Singleton.Shutdown();
            Loader.Load(Loader.Scene.MainMenuScene); 
         } 
         );
