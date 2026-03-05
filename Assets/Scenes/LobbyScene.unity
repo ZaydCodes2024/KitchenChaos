@@ -1284,6 +1284,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::KitchenGameMultiplayer
   ShowTopMostFoldoutHeaderGroup: 1
   kitchenObjectListSO: {fileID: 11400000, guid: 5099818436e4a46d19c092dab6814fa7, type: 2}
+  playerColorList:
+  - {r: 1, g: 0.75870734, b: 0, a: 1}
+  - {r: 0.23046398, g: 1, b: 0.023584902, a: 1}
+  - {r: 1, g: 0.51687396, b: 0, a: 1}
+  - {r: 0, g: 0.8585174, b: 1, a: 1}
+  - {r: 0.5049734, g: 0, b: 1, a: 1}
+  - {r: 1, g: 0, b: 0.73927116, a: 1}
+  - {r: 0, g: 0.020439148, b: 1, a: 1}
+  - {r: 1, g: 1, b: 1, a: 1}
+  - {r: 0.4716981, g: 0.4716981, b: 0.4716981, a: 1}
+  - {r: 0.14150941, g: 0.14150941, b: 0.14150941, a: 1}
 --- !u!114 &1135786188
 MonoBehaviour:
   m_ObjectHideFlags: 0
