@@ -39,7 +39,8 @@ public class KitchenGameMultiplayer : NetworkBehaviour
     {
         playerDataNetworkList.Add(new PlayerData
         {
-            clientId = clientId
+            clientId = clientId,
+            colorId = GetFirstUnusedColor()
         });
     }
 
@@ -69,9 +70,77 @@ public class KitchenGameMultiplayer : NetworkBehaviour
     {
         return playerDataNetworkList[playerIndex];
     }
+    public PlayerData GetPlayerDataFromClientId(ulong clientId)
+    {
+        foreach (PlayerData playerData in playerDataNetworkList)
+        {
+            if (playerData.clientId == clientId)
+            {
+                return playerData;
+            }
+        }
+        return default;
+    }
+    public int GetPlayerDataIndexFromClientId(ulong clientId)
+    {
+        for (int i = 0; i < playerDataNetworkList.Count; i++)
+        {
+            if (playerDataNetworkList[i].clientId == clientId)
+            {
+                return i;
+            }
+        }
+        return -1;
+    }
+    public PlayerData GetPlayerData()
+    {
+        return GetPlayerDataFromClientId(NetworkManager.Singleton.LocalClientId);
+    }
     public Color GetPlayerColor(int colorId)
     {
         return playerColorList[colorId];
+    }
+    public void ChangePlayerColor(int colorId)
+    {
+        ChangePlayerColorServerRpc(colorId);
+    }
+    [Rpc(SendTo.Server,InvokePermission = RpcInvokePermission.Everyone)]
+    public void ChangePlayerColorServerRpc(int colorId, RpcParams rpcParams = default)
+    {
+        if (!IsColorAvailable(colorId))
+        {
+            // Color not available
+            return;
+        }
+
+        int playerDataIndex = GetPlayerDataIndexFromClientId(rpcParams.Receive.SenderClientId);
+        PlayerData playerData = playerDataNetworkList[playerDataIndex];
+        playerData.colorId = colorId;
+        playerDataNetworkList[playerDataIndex] = playerData;
+    }
+    private bool IsColorAvailable(int colorId)
+    {
+        foreach (PlayerData playerData in playerDataNetworkList)
+        {
+            if (playerData.colorId == colorId)
+            {
+                // Already in Use
+                return false;
+            }
+        }
+
+        return true;
+    }
+    private int GetFirstUnusedColor()
+    {
+        for (int i = 0; i < playerColorList.Count; i++)
+        {
+            if (IsColorAvailable(i))
+            {
+                return i;
+            }
+        }
+        return -1;
     }
     public void StartClient()
     {
