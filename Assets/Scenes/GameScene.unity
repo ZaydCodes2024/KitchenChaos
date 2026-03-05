@@ -5446,6 +5446,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GameManager
   ShowTopMostFoldoutHeaderGroup: 1
+  playerPrefab: {fileID: 8209509737320465278, guid: b19a3ea5549b64c1ba539edd4a06304e, type: 3}
 --- !u!4 &579739318
 Transform:
   m_ObjectHideFlags: 0
@@ -6111,7 +6112,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &685315309
 RectTransform:
   m_ObjectHideFlags: 0
