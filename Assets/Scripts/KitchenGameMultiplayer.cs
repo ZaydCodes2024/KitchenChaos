@@ -7,7 +7,7 @@ using UnityEngine.SceneManagement;
 public class KitchenGameMultiplayer : NetworkBehaviour
 {
     public static KitchenGameMultiplayer Instance { get; private set;}
-    private const int MAX_PLAYER_AMT = 4;
+    public const int MAX_PLAYER_AMT = 4;
     public event EventHandler OnTryingToJoinGame;
     public event EventHandler OnFailedToJoinGame;
     public event EventHandler OnPlayerDataNetworkListChanged;
@@ -59,6 +59,13 @@ public class KitchenGameMultiplayer : NetworkBehaviour
 
     private void NetworkManager_ConnectionApprovalCallback(NetworkManager.ConnectionApprovalRequest request, NetworkManager.ConnectionApprovalResponse response)
     {
+        // Skip host connection
+        if (request.ClientNetworkId == NetworkManager.ServerClientId)
+        {
+            response.Approved = true;
+            return;
+        }
+
         if (SceneManager.GetActiveScene().name != Loader.Scene.CharacterSelectScene.ToString())
         {
             response.Approved = false;
