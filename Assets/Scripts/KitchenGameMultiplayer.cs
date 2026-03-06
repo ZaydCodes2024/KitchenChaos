@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using Unity.Netcode;
+using Unity.Services.Authentication;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -69,6 +70,7 @@ public class KitchenGameMultiplayer : NetworkBehaviour
             colorId = GetFirstUnusedColor()
         });
         SetPlayerNameServerRpc(GetPlayerName());
+        SetPlayerIdServerRpc(AuthenticationService.Instance.PlayerId);
     }
 
     private void NetworkManager_ConnectionApprovalCallback(NetworkManager.ConnectionApprovalRequest request, NetworkManager.ConnectionApprovalResponse response)
@@ -186,13 +188,14 @@ public class KitchenGameMultiplayer : NetworkBehaviour
         OnTryingToJoinGame?.Invoke(this, EventArgs.Empty);
 
         NetworkManager.Singleton.OnClientDisconnectCallback += NetworkManager_Client_OnClientDisconnectCallback;
-        NetworkManager.Singleton.OnClientConnectedCallback += NetworkManager_Server_OnClientConnectedCallback;
+        NetworkManager.Singleton.OnClientConnectedCallback += NetworkManager_Client_OnClientConnectedCallback;
         NetworkManager.Singleton.StartClient();
     }
 
-    private void NetworkManager_Server_OnClientConnectedCallback(ulong clientId)
+    private void NetworkManager_Client_OnClientConnectedCallback(ulong clientId)
     {
         SetPlayerNameServerRpc(GetPlayerName());
+        SetPlayerIdServerRpc(AuthenticationService.Instance.PlayerId);
     }
 
     [Rpc(SendTo.Server,InvokePermission = RpcInvokePermission.Everyone)]
@@ -201,6 +204,15 @@ public class KitchenGameMultiplayer : NetworkBehaviour
         int playerDataIndex = GetPlayerDataIndexFromClientId(rpcParams.Receive.SenderClientId);
         PlayerData playerData = playerDataNetworkList[playerDataIndex];
         playerData.playerName = playerName;
+        playerDataNetworkList[playerDataIndex] = playerData;
+    }
+
+    [Rpc(SendTo.Server,InvokePermission = RpcInvokePermission.Everyone)]
+    private void SetPlayerIdServerRpc(string playerId, RpcParams rpcParams = default)
+    {
+        int playerDataIndex = GetPlayerDataIndexFromClientId(rpcParams.Receive.SenderClientId);
+        PlayerData playerData = playerDataNetworkList[playerDataIndex];
+        playerData.playerId = playerId;
         playerDataNetworkList[playerDataIndex] = playerData;
     }
 

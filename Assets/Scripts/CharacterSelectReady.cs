@@ -36,7 +36,11 @@ public class CharacterSelectReady : NetworkBehaviour
             }
         }
 
-        if (allClientsReady)    Loader.LoadNetwork(Loader.Scene.GameScene);
+        if (allClientsReady)    
+        {
+            KitchenGameLobby.Instance.DeleteLobby();
+            Loader.LoadNetwork(Loader.Scene.GameScene);
+        }
     }
     [ClientRpc]
     private void SetPlayerReadyClientRpc(ulong clientId)

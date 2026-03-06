@@ -65,9 +65,52 @@ public class KitchenGameLobby : MonoBehaviour
         catch (LobbyServiceException e)
         {
             Debug.Log(e);
-            throw;
         }
         
+    }
+    public async void DeleteLobby()
+    {
+        if (joinLobby != null)
+        {
+            try
+            {
+                await LobbyService.Instance.DeleteLobbyAsync(joinLobby.Id);
+                joinLobby = null;
+            }
+            catch (LobbyServiceException e)
+            {
+                Debug.Log(e);
+            }
+        }
+    }
+    public async void LeaveLobby()
+    {
+        if (joinLobby != null)
+        {
+            try
+            {
+                await LobbyService.Instance.RemovePlayerAsync(joinLobby.Id, AuthenticationService.Instance.PlayerId);
+                joinLobby = null;
+            }
+            catch (LobbyServiceException e)
+            {
+                Debug.Log(e);
+            }
+        }
+    }
+    public async void KickPlayer(string playerId)
+    {
+        if (IsLobbyHost())
+        {
+            try
+            {
+                await LobbyService.Instance.RemovePlayerAsync(joinLobby.Id, playerId);
+            }
+            catch (LobbyServiceException e)
+            {
+                Debug.Log(e);
+            }
+        }
     }
     public async void QuickJoin()
     {
@@ -79,7 +122,6 @@ public class KitchenGameLobby : MonoBehaviour
         catch (LobbyServiceException e)
         {
             Debug.Log(e);
-            throw;
         }
         
     }
@@ -93,7 +135,6 @@ public class KitchenGameLobby : MonoBehaviour
         catch (LobbyServiceException e)
         {
             Debug.Log(e);
-            throw;
         }
     }
     public Lobby GetLobby()
