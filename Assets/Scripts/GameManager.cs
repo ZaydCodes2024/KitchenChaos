@@ -217,6 +217,8 @@ public class GameManager : NetworkBehaviour
 
     private void TestGamePauseState()
     {
+        if (NetworkManager.Singleton == null)   return;
+        
         foreach (ulong clientId in NetworkManager.Singleton.ConnectedClientsIds)
         {
             if (playerPauseDictionary.ContainsKey(clientId) && playerPauseDictionary[clientId])
