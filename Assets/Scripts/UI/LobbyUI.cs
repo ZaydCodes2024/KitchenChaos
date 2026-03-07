@@ -77,4 +77,9 @@ public class LobbyUI : MonoBehaviour
     {
         KitchenGameLobby.Instance.OnLobbyListChanged -= KitchenGameLobby_OnLobbyListChanged;
     }
+
+    public void Show()
+    {
+        createLobbyButton.Select();
+    }
 }

@@ -8,6 +8,7 @@ public class LobbyCreateUI : MonoBehaviour
     [SerializeField] private Button createPrivateButton;
     [SerializeField] private Button closeButton;
     [SerializeField] private TMP_InputField lobbyNameInputField;
+    [SerializeField] private LobbyUI lobbyUI;
     private void Awake()
     {
         createPublicButton.onClick.AddListener( () =>
@@ -31,9 +32,11 @@ public class LobbyCreateUI : MonoBehaviour
     public void Show()
     {
         gameObject.SetActive(true);
+        createPublicButton.Select();
     }
     private void Hide()
     {
         gameObject.SetActive(false);
+        lobbyUI.Show();
     }
 }
