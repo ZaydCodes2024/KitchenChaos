@@ -31,7 +31,6 @@ public class KitchenGameLobby : MonoBehaviour
     private float listLobbiesTimer;
     private float listLobbiesTimerMax = 3f;
     private float heartBeatTimerMax = 15f;      
-    private bool isUnityServicesInitialized = false;
     private void Awake()
     {
         Instance = this;
@@ -108,8 +107,6 @@ public class KitchenGameLobby : MonoBehaviour
             await UnityServices.InitializeAsync(initializationOptions);
 
             await AuthenticationService.Instance.SignInAnonymouslyAsync();
-            
-            isUnityServicesInitialized = true;
         }
     }
     private async Task<Allocation> AllocateRelay()
@@ -153,7 +150,6 @@ public class KitchenGameLobby : MonoBehaviour
     }
     public async void CreateLobby(string lobbyName, bool isPrivate)
     {
-        if (!isUnityServicesInitialized)    return;
 
         OnCreateLobbyStarted?.Invoke(this, EventArgs.Empty);
         try
@@ -169,19 +165,7 @@ public class KitchenGameLobby : MonoBehaviour
                     { KEY_RELAY_JOIN_CODE, new DataObject(DataObject.VisibilityOptions.Member, relayJoinCode)}
                 }
             });
-
-            UnityTransport transport = NetworkManager.Singleton.GetComponent<UnityTransport>();
-
-            transport.SetRelayServerData(
-                allocation.RelayServer.IpV4,
-                (ushort)allocation.RelayServer.Port,
-                allocation.AllocationIdBytes,
-                allocation.Key,
-                allocation.ConnectionData,
-                allocation.ConnectionData,
-                true
-            );
-
+            
             await LobbyService.Instance.UpdateLobbyAsync(joinLobby.Id, new UpdateLobbyOptions
             {
                 Data = new Dictionary<string, DataObject>
@@ -190,6 +174,8 @@ public class KitchenGameLobby : MonoBehaviour
                 }
             });
             
+            NetworkManager.Singleton.GetComponent<UnityTransport>().SetRelayServerData(AllocationUtils.ToRelayServerData(allocation,"dtls"));
+
             KitchenGameMultiplayer.Instance.StartHost();
             Loader.LoadNetwork(Loader.Scene.CharacterSelectScene);
         }
@@ -254,17 +240,7 @@ public class KitchenGameLobby : MonoBehaviour
 
             JoinAllocation joinAllocation = await JoinRelay(relayJoinCode);
 
-            UnityTransport transport = NetworkManager.Singleton.GetComponent<UnityTransport>();
-
-            transport.SetRelayServerData(
-                joinAllocation.RelayServer.IpV4,
-                (ushort)joinAllocation.RelayServer.Port,
-                joinAllocation.AllocationIdBytes,
-                joinAllocation.Key,
-                joinAllocation.ConnectionData,
-                joinAllocation.HostConnectionData,
-                true
-            );
+            NetworkManager.Singleton.GetComponent<UnityTransport>().SetRelayServerData(AllocationUtils.ToRelayServerData(joinAllocation,"dtls"));
 
             KitchenGameMultiplayer.Instance.StartClient();
         }
@@ -285,17 +261,7 @@ public class KitchenGameLobby : MonoBehaviour
 
             JoinAllocation joinAllocation = await JoinRelay(relayJoinCode);
 
-            UnityTransport transport = NetworkManager.Singleton.GetComponent<UnityTransport>();
-
-            transport.SetRelayServerData(
-                joinAllocation.RelayServer.IpV4,
-                (ushort)joinAllocation.RelayServer.Port,
-                joinAllocation.AllocationIdBytes,
-                joinAllocation.Key,
-                joinAllocation.ConnectionData,
-                joinAllocation.HostConnectionData,
-                true
-            );
+            NetworkManager.Singleton.GetComponent<UnityTransport>().SetRelayServerData(AllocationUtils.ToRelayServerData(joinAllocation,"dtls"));
 
             KitchenGameMultiplayer.Instance.StartClient();
         }
@@ -315,17 +281,7 @@ public class KitchenGameLobby : MonoBehaviour
 
             JoinAllocation joinAllocation = await JoinRelay(relayJoinCode);
 
-            UnityTransport transport = NetworkManager.Singleton.GetComponent<UnityTransport>();
-
-            transport.SetRelayServerData(
-                joinAllocation.RelayServer.IpV4,
-                (ushort)joinAllocation.RelayServer.Port,
-                joinAllocation.AllocationIdBytes,
-                joinAllocation.Key,
-                joinAllocation.ConnectionData,
-                joinAllocation.HostConnectionData,
-                true
-            );
+            NetworkManager.Singleton.GetComponent<UnityTransport>().SetRelayServerData(AllocationUtils.ToRelayServerData(joinAllocation,"dtls"));
 
             KitchenGameMultiplayer.Instance.StartClient();
         }
