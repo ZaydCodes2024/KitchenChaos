@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using Unity.Netcode;
+using Unity.Netcode.Transports.UTP;
 using Unity.Services.Authentication;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -8,6 +9,7 @@ using UnityEngine.SceneManagement;
 public class KitchenGameMultiplayer : NetworkBehaviour
 {
     public static KitchenGameMultiplayer Instance { get; private set;}
+    public static bool playMultiplayer;
     public const int MAX_PLAYER_AMT = 4;
     private const string PLAYER_PREFS_PLAYER_NAME_MULTIPLAYER = "PlayerNameMultiplayer";
     public event EventHandler OnTryingToJoinGame;
@@ -26,6 +28,15 @@ public class KitchenGameMultiplayer : NetworkBehaviour
         playerName = PlayerPrefs.GetString(PLAYER_PREFS_PLAYER_NAME_MULTIPLAYER, "PlayerName" + UnityEngine.Random.Range(100,1000));
         playerDataNetworkList = new NetworkList<PlayerData>();
         playerDataNetworkList.OnListChanged += PlayerDataNetworkList_OnListChanged;
+    }
+    private void Start()
+    {
+        if (!playMultiplayer) // Single player
+        {
+            StartHostLocal();
+            Loader.LoadNetwork(Loader.Scene.GameScene);
+        }
+
     }
     public string GetPlayerName()
     {
@@ -48,6 +59,13 @@ public class KitchenGameMultiplayer : NetworkBehaviour
         NetworkManager.Singleton.OnClientConnectedCallback += NetworkManager_OnClientConnectedCallback;
         NetworkManager.Singleton.OnClientDisconnectCallback += NetworkManager_Server_OnClientDisconnectCallback;
         NetworkManager.Singleton.StartHost();
+    }
+    public void StartHostLocal()
+    {
+        UnityTransport transport = NetworkManager.Singleton.GetComponent<UnityTransport>();
+        transport.SetConnectionData("127.0.0.1", 7777);
+
+        StartHost();
     }
 
     private void NetworkManager_Server_OnClientDisconnectCallback(ulong clientId)
@@ -238,7 +256,7 @@ public class KitchenGameMultiplayer : NetworkBehaviour
         {
             return;
         }
-        
+
         Transform kitchenObjectTransfom = Instantiate(kitchenObjectSO.prefab);
 
         NetworkObject kitchenObjectNetworkObject = kitchenObjectTransfom.GetComponent<NetworkObject>();
