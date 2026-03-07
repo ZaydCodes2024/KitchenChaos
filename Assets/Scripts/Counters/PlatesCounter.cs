@@ -63,6 +63,8 @@ public class PlatesCounter : BaseCounter
     [ClientRpc]
     private void InteractLogicClientRpc()
     {
+        if (plateSpawnAmount <= 0)  return;
+
         plateSpawnAmount--;
         OnPlateRemoved?.Invoke(this, EventArgs.Empty);
     }
