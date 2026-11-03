@@ -162,23 +162,66 @@ The lobby/relay flow uses UGS and needs your own project linkage:
 
 ---
 
+## 📁 Project Structure
+
+```
+KitchenChaos/
+│  README.md                     # This file
+│  Packages/                     # Unity package manifest (Netcode, Input System, URP, …)
+│  ProjectSettings/              # Unity project settings
+│
+└── Assets/
+    ├── PlayerInputActions.cs    # Generated Input System class (keyboard + gamepad)
+    │
+    ├── Scenes/                  # MainMenu, Lobby, CharacterSelect, Loading, and main GameScene
+    │
+    ├── Prefabs/                 # Networked/scene prefabs
+    │   ├── CounterObjects/      # Clear/Cutting/Stove/Delivery counters, etc.
+    │   └── KitchenObjects/      # Ingredients, plates, the player prefab
+    │
+    ├── Resources/               # Runtime-loaded assets (kitchen object list, etc.)
+    │
+    ├── ScriptableObjects/       # Data assets (see Architecture below)
+    │   ├── BurningReceipeSO/    # Burn-time recipes
+    │   ├── CuttingReceipeSO/    # Cut products per ingredient
+    │   ├── FryingReceipeSO/     # Fry outputs per ingredient
+    │   ├── KitchenObjectSO/     # Every ingredient/item definition
+    │   ├── KitchenObjectListSO/ # Master list of all kitchen objects
+    │   └── ReceipeSO/           # Deliverable recipe definitions
+    │
+    ├── Scripts/
+    │   ├── Counters/            # One class per station (Base + Clear/Container/Cutting/Stove/Plates/Delivery/Trash)
+    │   ├── CounterVisuals/      # Animator/wiring for station visuals
+    │   ├── ScriptableObjects/   # SO definitions: KitchenObjectSO, ReceipeSO, CuttingReceipeSO, FryingReceipeSO, BurningReceipeSO, lists
+    │   └── UI/                  # Game HUD, delivery UI, pause/options, lobby UI, character select UI
+    │
+    ├── Settings/                # URP rendering profiles / build profiles
+    │
+    └── _Assets/                 # Source art & audio
+        ├── Animations/          # Character & container controller/anims
+        ├── Materials/           # Materials
+        ├── Meshes/              # Models + mesh textures
+        ├── PrefabsVisuals/      # CountersVisuals/ + KitchenObjectsVisuals/ (non-networked look prefabs)
+        ├── Shaders/             # Custom shaders
+        ├── Sounds/              # Music/ + SFX/
+        └── Textures/            # Icons/ + UI/environment art (TextMesh Pro assets live in TextMesh Pro/)
+```
+
+Key root directories: `Assets/Scenes` (scene flow), `Assets/Scripts` (game code), `Assets/ScriptableObjects` (data-driven recipes & items), `Assets/Prefabs` (networked objects). `Library/`, `Logs/`, and `UserSettings/` are editor-generated and can be skipped when browsing.
+
+---
+
 ## 🧠 Architecture Overview
 
 ```
-Assets/Scripts/
-│  GameManager.cs            # Game state machine (NetworkVariable<State>) and pause policy
-│  DeliveryManager.cs        # Server spawns orders; validates delivered plates
-│  KitchenGameMultiplayer.cs # Connection approval, player data NetworkList, item spawn/destroy
-│  KitchenGameLobby.cs       # UGS Lobby + Relay matchmaking (create/quick join/join by code/ID)
-│  GameInput.cs              # Input System wrapper + rebinding persistence
-│  Loader.cs / Player.cs     # Scene loader helper / player movement & interaction
-│  SoundManager.cs / MusicManager.cs
-CharacterSelection/          # Character select scene scripts
-Counter visuals + animator
-UI/                          # Game HUD, delivery UI, pause/options, lobby UI, character select UI
-Counters/                    # One class per station (Base + Clear/Container/Cutting/Stove/Plates/Delivery/Trash)
-ScriptableObjects/           # KitchenObjectSO, ReceipeSO, CuttingReceipeSO, FryingReceipeSO, BurningReceipeSO, lists
-Player/                      # Player.cs, PlayerVisual.cs, PlayerAnimator.cs
+GameManager.cs            # Game state machine (NetworkVariable<State>) and pause policy
+DeliveryManager.cs        # Server spawns orders; validates delivered plates
+KitchenGameMultiplayer.cs # Connection approval, player data NetworkList, item spawn/destroy
+KitchenGameLobby.cs       # UGS Lobby + Relay matchmaking (create/quick join/join by code/ID)
+GameInput.cs              # Input System wrapper + rebinding persistence
+Loader.cs / Player.cs     # Scene loader helper / player movement & interaction
+SoundManager.cs / MusicManager.cs
+Player/                   # Player.cs, PlayerVisual.cs, PlayerAnimator.cs
 ```
 
 ### Key patterns
