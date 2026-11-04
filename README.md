@@ -11,17 +11,17 @@ Kitchen Chaos is my take on the [Code Monkey multiplayer course](#credits) proje
 <table>
   <tr>
     <td align="center">
-      <img src="Gameplay-Multiplayer.png" alt="Gameplay" width="600"/><br/>
+      <img src="Gameplay-Multiplayer.jpg" alt="Gameplay" width="600"/><br/>
       <em>In-game: chefs rushing orders</em>
     </td>
   </tr>
   <tr>
     <td align="center">
-      <img src="MainMenu.png" alt="Main menu" width="600"/><br/>
+      <img src="MainMenu.jpg" alt="Main menu" width="600"/><br/>
       <em>Main menu</em>
     </td>
     <td align="center">
-      <img src="Lobby.png" alt="Lobby" width="800"/><br/>
+      <img src="Lobby.jpg" alt="Lobby" width="800"/><br/>
       <em>Lobby list and joining</em>
     </td>
   </tr>
