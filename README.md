@@ -21,7 +21,7 @@ Kitchen Chaos is my take on the [Code Monkey multiplayer course](#credits) proje
       <em>Main menu</em>
     </td>
     <td align="center">
-      <img src="Lobby.png" alt="Lobby" width="600"/><br/>
+      <img src="Lobby.png" alt="Lobby" width="800"/><br/>
       <em>Lobby list and joining</em>
     </td>
   </tr>
