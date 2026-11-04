@@ -8,56 +8,34 @@ Kitchen Chaos is my take on the [Code Monkey multiplayer course](#credits) proje
 
 ## 📸 Screenshots
 
-> **Adding your screenshots:** create a folder called `docs/images/` at the project root, save your screenshots in it with the file names below (PNG or JPG), and every image will show up automatically in this README. Until the files exist the links will show as broken thumbnails — that's expected. Tip: keep screenshots the same aspect ratio and around 1280×720 for a clean gallery.
-
 <table>
   <tr>
     <td align="center">
-      <img src="docs/images/gameplay.png" alt="Gameplay" width="600"/><br/>
-      <em>In-game: two chefs rushing orders</em>
-    </td>
-    <td align="center">
-      <img src="docs/images/gameplay-2.png" alt="Gameplay 2" width="600"/><br/>
-      <em>Cutting and frying stations in action</em>
+      <img src="Gameplay-Multiplayer.png" alt="Gameplay" width="600"/><br/>
+      <em>In-game: chefs rushing orders</em>
     </td>
   </tr>
   <tr>
     <td align="center">
-      <img src="docs/images/main-menu.png" alt="Main menu" width="600"/><br/>
+      <img src="MainMenu.png" alt="Main menu" width="600"/><br/>
       <em>Main menu</em>
     </td>
     <td align="center">
-      <img src="docs/images/lobby.png" alt="Lobby" width="600"/><br/>
+      <img src="Lobby.png" alt="Lobby" width="600"/><br/>
       <em>Lobby list and joining</em>
     </td>
   </tr>
   <tr>
     <td align="center">
-      <img src="docs/images/character-select.png" alt="Character select" width="600"/><br/>
-      <em>Character selection (color + name)</em>
+      <img src="Character Selection.jpg" alt="Character select" width="600"/><br/>
+      <em>Character selection (color)</em>
     </td>
     <td align="center">
-      <img src="docs/images/orders-ui.png" alt="Orders UI" width="600"/><br/>
+      <img src="Orders-ui.jpg" alt="Orders UI" width="600"/><br/>
       <em>Waiting orders on the delivery side</em>
     </td>
   </tr>
-  <tr>
-    <td align="center">
-      <img src="docs/images/pause.png" alt="Pause + options" width="600"/><br/>
-      <em>Pause and options (key rebinding)</em>
-    </td>
-    <td align="center">
-      <img src="docs/images/game-over.png" alt="Game over" width="600"/><br/>
-      <em>Scores at the end of a 90-second round</em>
-    </td>
-  </tr>
 </table>
-
-Single-image version (use this if you prefer a classic layout over the table):
-
-```markdown
-![Gameplay](docs/images/gameplay.png)
-```
 
 ---
 
